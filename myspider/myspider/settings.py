@@ -14,7 +14,12 @@ BOT_NAME = 'myspider'
 SPIDER_MODULES = ['myspider.spiders']
 NEWSPIDER_MODULE = 'myspider.spiders'
 
-LOG_LEVEL = "WARNING"
+# 日志
+LOG_ENCODING='utf-8'
+LOG_LEVEL = "INFO"
+LOG_FORMAT = '\x1b[0;0;34m%(asctime)s\x1b[0;0m \x1b[0;0;36m[%(name)s]\x1b[0;0m \x1b[0;0;31m%(levelname)s\x1b[0;3m: %(message)s'
+
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'myspider (+http://www.yourdomain.com)'
 
@@ -64,9 +69,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'myspider.pipelines.MyspiderPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'myspider.pipelines.MyspiderPipeline': 300,
+   'myspider.pipelines.MyspiderPipeline1': 301
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
