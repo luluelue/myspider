@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from myspider.items import SunVo
+import urllib.parse as urlparse
 
 
 # 运行爬虫不要开代理！！
@@ -28,6 +29,7 @@ class SungvSpider(scrapy.Spider):
             )
 
         next_url = host + response.xpath("//a[@class='arrow-page prov_rota']/@href").extract_first()
+        # http://wz.sun0769.com/political/index/politicsNewest?id=1&page=1
         current_page = response.xpath("//div[@class='mr-three paging-box']//a").extract()
         print("当前页：" + current_page)
         print("next_url = " + next_url)
