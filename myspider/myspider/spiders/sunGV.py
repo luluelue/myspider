@@ -3,6 +3,7 @@ import scrapy
 from myspider.items import SunVo
 
 
+# 运行爬虫不要开代理！！
 class SungvSpider(scrapy.Spider):
     name = 'sunGV'
     allowed_domains = ['sun0769.com']
@@ -26,9 +27,10 @@ class SungvSpider(scrapy.Spider):
                 meta={"item": item}
             )
 
-        next_url = response.xpath("//a[@class='arrow-page prov_rota']/@href").extract_first()
-        current_page = response.xpath("//a[@class='page-num'][4]/text()").extract_first()
-        print(current_page)
+        next_url = host + response.xpath("//a[@class='arrow-page prov_rota']/@href").extract_first()
+        current_page = response.xpath("//div[@class='mr-three paging-box']//a").extract()
+        print("当前页：" + current_page)
+        print("next_url = " + next_url)
         if next_url is not None:
             yield scrapy.Request(
                 next_url,
