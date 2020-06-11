@@ -68,12 +68,17 @@ ROBOTSTXT_OBEY = True
 #}
 
 # Configure item pipelines
-# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'myspider.pipelines.MyspiderPipeline': 300,
-   'myspider.pipelines.MyspiderPipeline1': 301
+   # 'myspider.pipelines.MyspiderPipeline': 300,
+   # 'myspider.pipelines.MyspiderPipeline1': 301
+   'myspider.pipelines.SunGvPipeline': 301,
 }
+# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "sungv"
+MONGODB_COLLECTION = "item"
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
