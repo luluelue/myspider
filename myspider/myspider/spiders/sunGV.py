@@ -15,7 +15,6 @@ class SungvSpider(scrapy.Spider):
 
     # //表示无视层级关系，/ 表示重视层级关系，一层层解析
     def parse(self, response):
-
         li_list = response.xpath("//ul[@class='title-state-ul']/li")
         host = 'http://wz.sun0769.com'
         for li in li_list:
@@ -33,11 +32,11 @@ class SungvSpider(scrapy.Spider):
             )
 
         next_url = host + response.xpath("//a[@class='arrow-page prov_rota']/@href").extract_first()
-        # http://wz.sun0769.com/political/index/politicsNewest?id=1&page=1
-        current_page = response.xpath("//div[@class='mr-three paging-box']//a").extract()
-        print("当前页：" + current_page)
-        print("next_url = " + next_url)
-        if next_url is not None:
+        next_page = urlparse.parse_qs(urlparse.urlparse(next_url).query).get("page")
+        current_page = response.meta.get("next_page", 1)
+        print("当前页", current_page)
+        print("下一页", next_page)
+        if next_url is not None and current_page != next_page:
             yield scrapy.Request(
                 next_url,
                 callback=self.parse,
