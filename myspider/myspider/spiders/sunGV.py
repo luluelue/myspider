@@ -7,13 +7,19 @@ from myspider.items import SunVo
 import urllib.parse as urlparse
 
 log = logging.getLogger(__name__)
+
+# 生成爬虫命令 scrapy genspider sunGV "sun0769.com"
 # 运行爬虫不要开代理！！
 class SungvSpider(scrapy.Spider):
     name = 'sunGV'
     allowed_domains = ['sun0769.com']
     start_urls = ['http://wz.sun0769.com/political/index/politicsNewest']
 
-    # //表示无视层级关系，/ 表示重视层级关系，一层层解析
+    # //表示无视层级关系，/ 表示重视层级关系，一层层解析，前面定义的 MongoDB连接对象最好在这里声明一次，这样pycharm就能够提示存在collection对象
+    def __init__(self, name=None, **kwargs):
+        super().__init__(name=None, **kwargs)
+        self.collection = None
+
     def parse(self, response):
         li_list = response.xpath("//ul[@class='title-state-ul']/li")
         host = 'http://wz.sun0769.com'
@@ -30,6 +36,7 @@ class SungvSpider(scrapy.Spider):
                 # 用来给回调函数传递数据
                 meta={"item": item}
             )
+
 
         next_url = host + response.xpath("//a[@class='arrow-page prov_rota']/@href").extract_first()
         next_page = urlparse.parse_qs(urlparse.urlparse(next_url).query).get("page")
@@ -48,5 +55,8 @@ class SungvSpider(scrapy.Spider):
         item["content"] = response.xpath("//div[@class='details-box']/pre/text()").extract_first()
         item["content_img"] = response.xpath(
             "//div[@class='clear details-img-list Picture-img']/img/@src").extract()
+
+        self.collection.insert(dict(item))
+        self.log("aa")
         # yield 完成之后交给pipeline处理
         yield item
