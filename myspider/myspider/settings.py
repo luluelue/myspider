@@ -8,6 +8,8 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import datetime
+import os
 
 BOT_NAME = 'myspider'
 
@@ -17,8 +19,18 @@ NEWSPIDER_MODULE = 'myspider.spiders'
 # 日志
 LOG_ENCODING='utf-8'
 LOG_LEVEL = "INFO"
-LOG_FORMAT = '\x1b[0;0;34m%(asctime)s\x1b[0;0m \x1b[0;0;36m[%(name)s]\x1b[0;0m \x1b[0;0;31m%(levelname)s\x1b[0;3m: %(message)s'
+# LOG_FORMAT = '\x1b[0;0;34m%(asctime)s\x1b[0;0m \x1b[0;0;36m[%(name)s]\x1b[0;0m \x1b[0;0;31m%(levelname)s\x1b[0;3m: %(message)s'
+LOG_FORMAT = "%(message)s"
 
+
+to_day = datetime.datetime.now()
+log_file_path = 'D:/log/scrapy_{}_{}_{}.log'.format(to_day.year, to_day.month, to_day.day)
+if not os.path.isdir("D:/log/"):  # 无文件夹时创建
+            os.makedirs("D:/log/")
+if not os.path.isfile(log_file_path):  # 无文件时创建
+            fd = open(log_file_path, mode="w", encoding="utf-8")
+            fd.close()
+LOG_FILE = log_file_path
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.92 Safari/537.36'

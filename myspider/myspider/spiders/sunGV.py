@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+import logging
+import urllib
+
 import scrapy
 from myspider.items import SunVo
 import urllib.parse as urlparse
 
-
+log = logging.getLogger(__name__)
 # 运行爬虫不要开代理！！
 class SungvSpider(scrapy.Spider):
     name = 'sunGV'
@@ -30,11 +33,11 @@ class SungvSpider(scrapy.Spider):
             )
 
         next_url = host + response.xpath("//a[@class='arrow-page prov_rota']/@href").extract_first()
-        next_page = urlparse.parse_qs(urlparse.urlparse(next_url).query).get("page")
-        current_page = response.meta.get("next_page", 1)
-        print("当前页", current_page)
-        print("下一页", next_page)
-        if next_url is not None and current_page != next_page:
+        # http://wz.sun0769.com/political/index/politicsNewest?id=1&page=1
+        current_page = response.xpath("//div[@class='mr-three paging-box']//a").extract()
+        print("当前页：" + current_page)
+        print("next_url = " + next_url)
+        if next_url is not None:
             yield scrapy.Request(
                 next_url,
                 callback=self.parse,
