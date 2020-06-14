@@ -1,7 +1,5 @@
 from scrapy import cmdline
 
 # cmdline.execute("scrapy crawl itcast".split())
-# cmdline.execute("scrapy crawl tencenthr".split())
-cmdline.execute("scrapy crawl sunGV".split())
-# cmdline.execute("scrapy crawl itcast".split())
-# cmdline.execute("scrapy crawl juejin".split())
+# cmdline.execute("scrapy crawl sunGV".split())
+cmdline.execute("scrapy crawl cibrc1".split())

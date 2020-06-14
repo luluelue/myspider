@@ -23,6 +23,10 @@ class ItcastPipeline:
 class SunGvPipeline:
     # 此方法只会在爬虫启动前执行一次，爬虫是个全局对象，这里将连接对象放到spider对象中，使得每个有spider的地方都能够使用到这个连接对象
     # 后面最好在spider对象的初始化方法中声明，这样pycharm才能够智能提示
+    # 开启mongodb命令 mongod -f G:\freeInstallSoft\mongodb-win32-x86_64-2012plus-4.2.8\mongodb.conf
+    # 注册MongoDB为服务命令 mongod -f G:\freeInstallSoft\mongodb-win32-x86_64-2012plus-4.2.8\mongodb.conf --install
+    # 停止MongoDB服务 net stop mongodb
+    # 开启MongoDB服务 net start mongodb
     def open_spider(self, spider):
         client = MongoClient("localhost", 27017)
         spider.collection = client["sungv"]["item"]

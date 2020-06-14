@@ -18,6 +18,14 @@ class ItcastItem(scrapy.Item):
 class SunVo(scrapy.Item):
     title = scrapy.Field()
     href = scrapy.Field()
-    publish_time =scrapy.Field()
-    content_img =scrapy.Field()
-    content =scrapy.Field()
+    publish_time = scrapy.Field()
+    content_img = scrapy.Field()
+    content = scrapy.Field()
+
+
+class CbircVo(scrapy.Item):
+    title = scrapy.Field()
+    src_href = scrapy.Field()
+    doc_url = scrapy.Field()
+    publish_date = scrapy.Field()
+    doc_clob = scrapy.Field()
