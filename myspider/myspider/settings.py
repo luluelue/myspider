@@ -21,6 +21,9 @@ LOG_ENCODING = 'utf-8'
 LOG_LEVEL = "INFO"
 LOG_FORMAT = '\x1b[0;0;34m%(asctime)s\x1b[0;0m \x1b[0;0;36m[%(name)s]\x1b[0;0m \x1b[0;0;31m%(levelname)s\x1b[0;3m: %(message)s'
 
+# 显示cookie的传递过程日志
+COOKIES_DEBUG = True
+
 # to_day = datetime.datetime.now()
 # log_file_path = 'D:/log/scrapy_{}_{}_{}.log'.format(to_day.year, to_day.month, to_day.day)
 # if not os.path.isdir("D:/log/"):  # 无文件夹时创建

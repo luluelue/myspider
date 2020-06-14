@@ -16,7 +16,7 @@ class CibrcSpider(scrapy.Spider):
     start_urls = [
         'http://www.cbirc.gov.cn/cn/static/data/DocInfo/SelectDocByItemIdAndChild/data_itemId=4113,pageIndex=1,pageSize=18.json']
 
-
+    # 主站 http://www.cbirc.gov.cn/cn/view/pages/ItemDetail.html?docId=848783&itemId=4113&generaltype=9
     # 详情页，api接口
     # http://www.cbirc.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=357905.json
 

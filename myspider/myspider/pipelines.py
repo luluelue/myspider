@@ -11,6 +11,7 @@ import re
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 log = logging.getLogger(__name__)
 
+
 class ItcastPipeline:
     def process_item(self, item, spider):
         if isinstance(item, ItcastItem):
@@ -30,6 +31,9 @@ class SunGvPipeline:
     def open_spider(self, spider):
         client = MongoClient("localhost", 27017)
         spider.collection = client["sungv"]["item"]
+        with open('pwd.txt', 'rt') as f:
+            data = f.read()
+            spider.pwd = data
 
     def process_item(self, item, spider):
         self.process_content(item["content"], item["title"])
