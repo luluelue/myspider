@@ -105,7 +105,7 @@ class MyspiderDownloaderMiddleware:
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
 
-
+# 自定义下载中间件
 class RandomUserAgentMiddlware(object):
     # 随机更换user-agent\
     # 这个方法会在请求下载动作之前调用
