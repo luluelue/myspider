@@ -4,9 +4,9 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import random
 
 from scrapy import signals
-from fake_useragent import UserAgent
 
 
 class MyspiderSpiderMiddleware:
@@ -69,6 +69,7 @@ class MyspiderDownloaderMiddleware:
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
 
+    # 这个方法是在请求之前调用，一般是用来处理反扒机制
     def process_request(self, request, spider):
         # Called for each request that goes through the downloader
         # middleware.
@@ -81,6 +82,7 @@ class MyspiderDownloaderMiddleware:
         #   installed downloader middleware will be called
         return None
 
+    # 这个方法是在请求完成之后调用，可用来处理结果
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
 
@@ -105,14 +107,25 @@ class MyspiderDownloaderMiddleware:
 
 
 class RandomUserAgentMiddlware(object):
-    # 随机更换user-agent
-    def __init__(self, crawler):
-        super(RandomUserAgentMiddlware, self).__init__()
-        self.ua = UserAgent()
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        return cls(crawler)
-
+    # 随机更换user-agent\
+    # 这个方法会在请求下载动作之前调用
     def process_request(self, request, spider):
-        request.headers.setdefault("User-Agent", self.ua.random)
+        # 给爬虫添加代理，这里添加的代理是clash的本地代理
+        request.meta["proxy"] = "http://127.0.0.1:7890"
+
+        # 设置随机ua
+        ua = random.choice(spider.settings.get("USER_AGENTS"))
+        request.headers["User-Agent"] = ua
+
+    # 这个方法是在请求完成之后调用，可用来处理结果
+    def process_response(self):
+        pass
+
+
+class CheckUserAgent:
+    # 这个方法是在请求完成之后调用，可用来处理结果
+    def process_response(self, request, response, spider):
+        print(request.headers["User-Agent"])
+        # 这里需要返回response，将response交给引擎处理
+        # 若这里返回的是request，则引擎会将这个request再次处理去下载
+        return response
