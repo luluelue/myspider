@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'myspider.spiders'
 # 日志
 LOG_ENCODING = 'utf-8'
 # 日志等级，默认是debug等级，后面 debug -> info -> warn -> error -> fatal ->off
-LOG_LEVEL = "INFO"
+LOG_LEVEL = "DEBUG"
 LOG_FORMAT = '\x1b[0;0;34m%(asctime)s\x1b[0;0m \x1b[0;0;36m[%(name)s]\x1b[0;0m \x1b[0;0;31m%(levelname)s\x1b[0;3m: %(message)s'
 
 # 显示cookie的传递过程日志
@@ -83,10 +83,12 @@ COOKIES_ENABLED = True
 
 # Override the default request headers:
 # 设置请求头
-# DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-# }
+DEFAULT_REQUEST_HEADERS = {
+
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br",
+
+}
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
@@ -99,8 +101,8 @@ COOKIES_ENABLED = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 # 开启的下载中间件
 DOWNLOADER_MIDDLEWARES = {
-   'myspider.middlewares.RandomUserAgentMiddlware': 543,
-   'myspider.middlewares.CheckUserAgent': 544,
+    # 'myspider.middlewares.RandomUserAgentMiddlware': 543,
+    # 'myspider.middlewares.CheckUserAgent': 544,
 }
 
 # Enable or disable extensions
@@ -116,11 +118,6 @@ ITEM_PIPELINES = {
     'myspider.pipelines.SunGvPipeline': 301,
 }
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
-MONGODB_SERVER = "localhost"
-MONGODB_PORT = 27017
-MONGODB_DB = "sungv"
-MONGODB_COLLECTION = "item"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

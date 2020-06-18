@@ -111,7 +111,7 @@ class RandomUserAgentMiddlware(object):
     # 这个方法会在请求下载动作之前调用
     def process_request(self, request, spider):
         # 给爬虫添加代理，这里添加的代理是clash的本地代理
-        request.meta["proxy"] = "http://127.0.0.1:7890"
+        # request.meta["proxy"] = "http://127.0.0.1:7890"
 
         # 设置随机ua
         ua = random.choice(spider.settings.get("USER_AGENTS"))
